@@ -10,6 +10,56 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:C:\Users\gpamp\.nuget\packages\monogame.extended.content.pipeline\3.9.0-alpha0084\tools\MonoGame.Extended.Content.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin Grass.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Grass.tsx
+
+#begin Grassmap.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Grassmap.tmx
+
+#begin Stone.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Stone.tsx
+
+#begin Stone.tsx
+/importer:TiledMapTilesetImporter
+/processor:TiledMapTilesetProcessor
+/build:Stone.tsx
+
+#begin Stonemap.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:Stonemap.tmx
+
+#begin TX Tileset Grass.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TX Tileset Grass.png
+
+#begin TX Tileset Stone Ground.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:TX Tileset Stone Ground.png
 

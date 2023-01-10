@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using MonoGame.Extended.Screens;
 
-
 namespace Engine.Src.Scenes
 {
     internal class Village : GameScreen
@@ -22,7 +21,7 @@ namespace Engine.Src.Scenes
 
         public override void Draw(GameTime gameTime)
         {
-            Game.GraphicsDevice.Clear(Color.LightGreen);
+            Game.GraphicsDevice.Clear(Color.LightCoral);
         }
     }
 }
