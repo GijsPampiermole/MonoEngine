@@ -1,4 +1,5 @@
-﻿using Engine.Src.Scenes;
+﻿using Engine.Src.Engine;
+using Engine.Src.Scenes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -15,10 +16,10 @@ namespace Engine.Src
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private ScreenManager _screenManager;
-
         private OrthographicCamera _camera;
-        private Vector2 _cameraPosition;
+
+        private ScreenManager _screenManager;
+        Camera _cam = new Camera();
 
         public Game1()
         {
@@ -26,82 +27,42 @@ namespace Engine.Src
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            _graphics.PreferredBackBufferWidth = 800;
-            _graphics.PreferredBackBufferHeight = 600;
+            _graphics.PreferredBackBufferWidth = 960;
+            _graphics.PreferredBackBufferHeight = 640;
             _graphics.ApplyChanges();
 
             _screenManager = new ScreenManager();
             Components.Add(_screenManager);
         }
 
-        private void LoadMainMenu()
+        public void LoadMainMenu()
         {
             _screenManager.LoadScreen(new MainMenu(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
-        private void LoadVillage()
+        public void LoadVillage()
         {
             _screenManager.LoadScreen(new Village(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
-        private void LoadGrassland()
+        public void LoadGrassland()
         {
             _screenManager.LoadScreen(new Grassland(this), new FadeTransition(GraphicsDevice, Color.Black));
         }
 
-        private void LoadStoneMap()
+        public void LoadStoneMap()
         {
             _screenManager.LoadScreen(new StoneMap(this), new FadeTransition(GraphicsDevice, Color.Black));
-        }
-
-        private Vector2 GetMovementDirection()
-        {
-            var movementDirection = Vector2.Zero;
-            var state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Down))
-            {
-                movementDirection += Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.Up))
-            {
-                movementDirection -= Vector2.UnitY;
-            }
-            if (state.IsKeyDown(Keys.Left))
-            {
-                movementDirection -= Vector2.UnitX;
-            }
-            if (state.IsKeyDown(Keys.Right))
-            {
-                movementDirection += Vector2.UnitX;
-            }
-
-            // Can't normalize the zero vector so test for it before normalizing
-            if (movementDirection != Vector2.Zero)
-            {
-                movementDirection.Normalize();
-            }
-
-            return movementDirection;
-        }
-
-        private void MoveCamera(GameTime gameTime)
-        {
-            var speed = 200;
-            var seconds = gameTime.GetElapsedSeconds();
-            var movementDirection = GetMovementDirection();
-            _cameraPosition += movementDirection * seconds * speed;
-            _cameraPosition.Y = Convert.ToInt32(_cameraPosition.Y);
-            _cameraPosition.X = Convert.ToInt32(_cameraPosition.X);
+            _cam.setCameraPos(480, 320);
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 800, 600);
+            // Add camera and set base position
+            var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 960, 640);
             _camera = new OrthographicCamera(viewportadapter);
             GlobalVariables._camera = _camera;
-            _cameraPosition.X = 400;
-            _cameraPosition.Y = 300;
+            _cam.setCameraPos(0, 0);
 
             base.Initialize();
             LoadMainMenu();
@@ -110,8 +71,6 @@ namespace Engine.Src
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -138,10 +97,8 @@ namespace Engine.Src
                 LoadStoneMap();
             }
 
-            MoveCamera(gameTime);
-            _camera.LookAt(_cameraPosition);
-
-            // TODO: Add your update logic here
+            _cam.MoveCamera(gameTime);
+            _camera.LookAt(GlobalVariables._cameraPosition);
 
             base.Update(gameTime);
         }
@@ -150,7 +107,6 @@ namespace Engine.Src
         {
             GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
             _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
             _spriteBatch.End();
 
