@@ -13,6 +13,8 @@ namespace Engine.Src
 {
     public class Game1 : Game
     {
+        private Game1 game;
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -20,6 +22,9 @@ namespace Engine.Src
 
         private ScreenManager _screenManager;
         Camera _cam = new Camera();
+
+        public static Boolean ExitGame;
+        private MainMenu _mm;
 
         public Game1()
         {
@@ -58,6 +63,11 @@ namespace Engine.Src
 
         protected override void Initialize()
         {
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+            GlobalVariables.SpriteBatch = _spriteBatch;
+            GlobalVariables.Content = Content;
+
+
             // Add camera and set base position
             var viewportadapter = new BoxingViewportAdapter(Window, GraphicsDevice, 960, 640);
             _camera = new OrthographicCamera(viewportadapter);
@@ -71,12 +81,16 @@ namespace Engine.Src
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            _mm = new(game);
         }
 
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+                ExitGame = true;
+
+            if (ExitGame) { Exit(); }
 
             KeyboardState keyboardState = Keyboard.GetState();
 
@@ -100,6 +114,9 @@ namespace Engine.Src
             _cam.MoveCamera(gameTime);
             _camera.LookAt(GlobalVariables._cameraPosition);
 
+            GlobalVariables.Update();
+            //_mm.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -108,6 +125,7 @@ namespace Engine.Src
             GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(blendState: BlendState.AlphaBlend);
+            //_mm.Draw(gameTime);
             _spriteBatch.End();
 
             base.Draw(gameTime);
