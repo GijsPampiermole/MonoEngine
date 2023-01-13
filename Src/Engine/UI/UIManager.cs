@@ -18,10 +18,10 @@ namespace Engine.Src.Engine.UI
 
         public UIManager() { }
 
-        public Button AddButton(Vector2 pos, Vector2 texture, int depth)
+        public Button AddButton(Vector2 pos, TiledMapObject o, int depth)
         {
             transparantTexture2D = GlobalVariables.Content.Load<Texture2D>("Transparant");
-            Button b = new(pos, texture, depth, transparantTexture2D);
+            Button b = new(pos, o, depth, transparantTexture2D);
             _buttons.Add(b);
 
             return b;

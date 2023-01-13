@@ -8,7 +8,7 @@ namespace Engine.Src.Engine.UI
 {
     internal class Button
     {
-        private Vector2 _texture;
+        private TiledMapObject _object;
         private Vector2 _position;
         private readonly Rectangle _rect, _destrect;
         private Color _shade = Color.White;
@@ -18,12 +18,12 @@ namespace Engine.Src.Engine.UI
         public event EventHandler OnClick;
         private Texture2D _transparant;
 
-        public Button(Vector2 p, Vector2 t, float d, Texture2D i)
+        public Button(Vector2 p, TiledMapObject o, float d, Texture2D i)
         {
-            _texture = t;
+            _object = o;
             _position = p;
-            _destrect = new Rectangle((int)_position.X, (int)_position.Y, (int)_texture.X, (int)_texture.Y);
-            _rect = new((int)p.X, (int)p.Y, (int)t.X, (int)t.Y);
+            _destrect = new Rectangle((int)_position.X, (int)_position.Y, (int)o.Size.Width, (int)o.Size.Height);
+            _rect = new((int)p.X, (int)p.Y, (int)o.Size.Width, (int)o.Size.Height);
             _layerDepth = d / 100;
             _transparant = i;
         }

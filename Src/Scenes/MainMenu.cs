@@ -21,7 +21,6 @@ namespace Engine.Src.Scenes
         TiledMap _tiledMap;
         TiledMapRenderer _tiledMapRenderer;
         public TiledMapObjectLayer ButtonLayer { get; private set; } = null;
-        private List<Rectangle> buttonObjects;
 
         public MainMenu(Game game) : base(game) 
         {
@@ -35,13 +34,9 @@ namespace Engine.Src.Scenes
 
             ButtonLayer = _tiledMap.GetLayer<TiledMapObjectLayer>("Buttons");
 
-            buttonObjects = new List<Rectangle>();
-
-            _ui.AddButton(new(200, 200), new(400, 400), 1).OnClick += _btnF.Quit;
-
             foreach (var o in ButtonLayer.Objects)
             {
-                
+                _ui.AddButton(new(o.Position.X, o.Position.Y), o, 1).OnClick += _btnF.Quit;
             }
 
             _spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -50,14 +45,14 @@ namespace Engine.Src.Scenes
         public override void Update(GameTime gameTime)
         {
             _ui.Update();
-            //_tiledMapRenderer.Update(gameTime);
+            _tiledMapRenderer.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
             Game.GraphicsDevice.Clear(Color.Black);
             _ui.Draw();
-            //_tiledMapRenderer.Draw();
+            _tiledMapRenderer.Draw();
         }
     }
 }
